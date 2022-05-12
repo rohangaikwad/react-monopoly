@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+
+* { box-sizing: border-box; }
+:root {
+    --sz: calc(100vh / 7.5);
+}
+body { margin: 0; font-family: 'Open Sans', sans-serif; }
+
+#board-container { display: flex; justify-content: center; align-items: center; height: 100vh }
+#board {
+    display: grid;
+    grid-template-columns: var(--sz) repeat(9, 1fr) var(--sz);
+    grid-template-rows: var(--sz) repeat(9, 1fr) var(--sz);
+    grid-gap: 4px;
+    height: 98vh; width: 98vh;
+    background-color: #000;
+    border: solid 4px;
+
+    #center { background: #c6e8cd; grid-column-start: 2; grid-column-end: 11; grid-row-start: 2; grid-row-end: 11; }
+}
+
+.card-holder {
+    background: #c6e8cd; position: relative;
+    .card {
+        display: flex; flex-direction: column; position: absolute; width: calc( calc(98vh - var(--sz) * 2) / 9 - 5px); height: var(--sz); top: 0; transform-origin: 0 0; align-items: center;
+
+        label { font-size: 0.95vh; text-align: center; font-weight: 600; text-transform: uppercase; margin-top: 10%; -webkit-backface-visibility: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+
+        &:not(.place) label { padding: 0 5px; font-size: 1vh; font-weight: 800; }
+    }
+
+    &:nth-child(n + 11):not(:nth-child(n + 22)) .card {
+        transform: rotateZ(90deg) translateY(-100%);
+    }
+
+    &:nth-child(n + 22):not(:nth-child(n + 32)) .card {
+        transform: rotateZ(180deg) translateY(100%); transform-origin: bottom; 
+    }
+
+    &:nth-child(n + 32) .card {
+        transform: rotateZ(270deg) translateX(-100%);
+    }
+
+    &:nth-child(1),
+    &:nth-child(11),
+    &:nth-child(21),
+    &:nth-child(31) { 
+        .card {
+            background-color: #f1f1f1!important; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; label { margin-top: 0; }
+        }
+    }
+
+    .place-bg {
+        width: 100%; block-size: 2vh; margin-bottom: 20%; position: relative;
+        &:after { content: ""; width: 100%; height: 4px; background-color: #000; position: absolute; top: 100%; }
+    }
+}
